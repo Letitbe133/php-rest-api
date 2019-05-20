@@ -35,7 +35,7 @@ $post->id = $_POST['id'];
 $post->title = $_POST['title'];
 $post->author = $_POST['author'];
 $post->body = $_POST['body'];
-$post->category_id = $_POST['category_id'];
+$post->category_name = $_POST['category_name'];
 
 if($post->update_post()) {
     echo json_encode([

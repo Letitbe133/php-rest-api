@@ -34,7 +34,7 @@ $post = new Post($conn);
 $post->title = $_POST['title'];
 $post->author = $_POST['author'];
 $post->body = $_POST['body'];
-$post->category_id = $_POST['category_id'];
+$post->category_name = $_POST['category_name'];
 
 if($post->create_post()) {
     echo json_encode([
@@ -43,7 +43,7 @@ if($post->create_post()) {
             "title" => $post->title,
             "author" => $post->author,
             "body" => $post->body,
-            "category_id" => $post->category_id,
+            "category_name" => $post->category_name,
         ]
         ]);
 } else {

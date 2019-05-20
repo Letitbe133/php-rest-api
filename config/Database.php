@@ -4,7 +4,7 @@ class Database {
     // Paramètres DB
     // Les attributs sont en mode "private" et ne sont donc accessibles qu'à l'intérieur de la classe
     private $host = "localhost";
-    private $dbname = "rest_blog";
+    private $dbname = "blogposts";
     private $username = "letitbe133";
     private $password = "deepshadow2008";
     private $conn;

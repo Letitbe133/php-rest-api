@@ -24,20 +24,11 @@ class Post {
 
         // création de la requête
         $query = "
-            SELECT
-            c.name as category_name,
-            p.id,
-            p.category_id,
-            p.title,
-            p.body,
-            p.author,
-            p.created_at
+            SELECT *
             FROM "
-            . $this->table . " p
-            LEFT JOIN
-            categories c ON p.category_id = c.id
+            . $this->table . " 
             ORDER BY
-            p.created_at DESC";
+            created_at DESC";
 
         // préparation de la requête
         $stmt = $this->conn->prepare($query);
@@ -54,19 +45,10 @@ class Post {
 
         // création de la requête
         $query = "
-        SELECT
-        c.name as category_name,
-        p.id,
-        p.category_id,
-        p.title,
-        p.body,
-        p.author,
-        p.created_at
+        SELECT *
         FROM "
-        . $this->table . " p
-        LEFT JOIN
-        categories c ON p.category_id = c.id
-        WHERE p.id = :id
+        . $this->table . " 
+        WHERE id = :id
         LIMIT 0,1";
 
         // préparation de la requête
@@ -99,7 +81,7 @@ class Post {
             title = :title,
             body = :body,
             author = :author,
-            category_id = :category_id        
+            category_name = :category_name        
         ";
 
         // on prépare la requête
@@ -111,14 +93,14 @@ class Post {
         $this->title = htmlspecialchars(strip_tags($this->title));
         $this->body = htmlspecialchars(strip_tags($this->body));
         $this->author = htmlspecialchars(strip_tags($this->author));
-        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        $this->category_name = htmlspecialchars(strip_tags($this->category_name));
 
         // tableau associatif pour lier les paramètres reçus à la requête
         $params = [
             "title" => $this->title,
             "body" => $this->body,
             "author" => $this->author,
-            "category_id" => $this->category_id
+            "category_name" => $this->category_name
         ];
 
         // on exécute la requête et on vérifie si elle s'est bien déroulée 
@@ -143,7 +125,7 @@ class Post {
                 title = :title,
                 body = :body,
                 author = :author,
-                category_id = :category_id
+                category_name = :category_name
                 WHERE
                 id = :id        
             ";
@@ -155,7 +137,7 @@ class Post {
             $this->title = htmlspecialchars(strip_tags($this->title));
             $this->body = htmlspecialchars(strip_tags($this->body));
             $this->author = htmlspecialchars(strip_tags($this->author));
-            $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+            $this->category_name = htmlspecialchars(strip_tags($this->category_name));
             $this->id = htmlspecialchars(strip_tags($this->id));
     
             // tableau associatif pour lier les paramètres reçus à la requête
@@ -163,7 +145,7 @@ class Post {
                 "title" => $this->title,
                 "body" => $this->body,
                 "author" => $this->author,
-                "category_id" => $this->category_id,
+                "category_name" => $this->category_name,
                 "id" => $this->id
             ];
     
