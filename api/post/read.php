@@ -7,6 +7,8 @@
 // On envoie les headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: GET");
+
 
 // On inclus les objets (ou classes) nécessaires
 include_once "../../config/Database.php";
