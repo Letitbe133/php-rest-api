@@ -22,21 +22,14 @@ $conn = $db->connect();
 // On crée une nouvelle instance de l'objet (ou classe) Post
 $post = new Post($conn);
 
-// Si données en json
-// $data = json_decode(file_get_contents("php://input"));
-
-// $post->title = $data->title;
-// $post->body = $data->body;
-// $post->author = $data->author;
-// $post->category_id = $data->category_id;
-
 // si données formdata
-$post->title = $_POST['title'];
-$post->author = $_POST['author'];
-$post->body = $_POST['body'];
-$post->category_name = $_POST['category_name'];
+$data = [];
+$data['title'] = $_POST['title'];
+$data['author'] = $_POST['author'];
+$data['body'] = $_POST['body'];
+$data['category_name'] = $_POST['category_name'];
 
-if($post->create_post()) {
+if($post->create_post($data)) {
     echo json_encode([
         "message" => "Post succefully created",
         "data" => [

@@ -30,14 +30,17 @@ $post = new Post($conn);
 // $post->author = $data->author;
 // $post->category_id = $data->category_id;
 
-// si données formdata
-$post->id = $_POST['id'];
-$post->title = $_POST['title'];
-$post->author = $_POST['author'];
-$post->body = $_POST['body'];
-$post->category_name = $_POST['category_name'];
 
-if($post->update_post()) {
+    $id = $_GET['id'];
+
+    // si données formdata
+    $data = [];
+    $data['title'] = $_POST['title'];
+    $data['author'] = $_POST['author'];
+    $data['body'] = $_POST['body'];
+    $data['category_name'] = $_POST['category_name'];
+
+if($post->update_post($id, $data)) {
     echo json_encode([
         "success" => true,
         "message" => "Post successfully updated"

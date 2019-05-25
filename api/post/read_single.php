@@ -20,12 +20,21 @@ $conn = $db->connect();
 // On crée une nouvelle instance de l'objet (ou classe) Post
 $post = new Post($conn);
 
-// On récupère l'ID dans l'url
-// On utilise un opérateur ternaire mais on pourrait très bien utiliser un if()
-$post->id = isset($_GET['id']) ? $_GET['id'] : die();
+// On vérifie si l'id du post est bien passée en paramètre dans l'url
+// Si non, on affiche un message d'erreur
+if(!isset($_GET['id'])) {
+    echo json_encode([
+        "success" => false,
+        "message" => "No post id provided"
+    ]);
+    die();
+}
+
+// Si oui, on récupère l'id et on la stocke dans une variable
+$id = $_GET['id'];
 
 // On utilise la méthode read_single_post() de l'objet Post
-$result = $post->read_single_post();
+$result = $post->read_single_post($id);
 
 if($result) {
     // On encode en JSON et on affiche

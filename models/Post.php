@@ -7,7 +7,6 @@ class Post {
 
     // Propriétés publiques de l'objet Post
     public $id;
-    public $category_id;
     public $category_name;
     public $title;
     public $body;
@@ -41,7 +40,11 @@ class Post {
     }
 
     // Récupérer un post
-    public function read_single_post() {
+    public function read_single_post($id) {
+
+        if(!isset($id)) {
+            return false;
+        }
 
         // création de la requête
         $query = "
@@ -55,6 +58,7 @@ class Post {
         $stmt = $this->conn->prepare($query);
 
         // tableau associatif qui lie :id à l'id reçue en paramètre
+        $this->id = $id;
         $params = ["id" => $this->id];
 
         // excécution de la requête
@@ -62,7 +66,7 @@ class Post {
 
             // on récupère le résultat et on le stocke dans une variable (type: array)
             $row = $stmt->fetch();
-    
+  
             return $row;
         }
 
@@ -71,7 +75,7 @@ class Post {
     }
 
     // Créer un post
-    public function create_post() {
+    public function create_post($data) {
 
         // On crée la requête
         $query = "
@@ -90,10 +94,10 @@ class Post {
         // On nettoie et sécurise les inputs
         // référence strip_tags(): https://www.php.net/manual/en/function.strip-tags.php
         // référence htmlspecialchars() : https://www.php.net/manual/en/function.htmlspecialchars.php 
-        $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->body = htmlspecialchars(strip_tags($this->body));
-        $this->author = htmlspecialchars(strip_tags($this->author));
-        $this->category_name = htmlspecialchars(strip_tags($this->category_name));
+        $this->title = htmlspecialchars(strip_tags($data['title']));
+        $this->body = htmlspecialchars(strip_tags($data['body']));
+        $this->author = htmlspecialchars(strip_tags($data['author']));
+        $this->category_name = htmlspecialchars(strip_tags($data['category_name']));
 
         // tableau associatif pour lier les paramètres reçus à la requête
         $params = [
@@ -115,7 +119,7 @@ class Post {
     }
 
         // Modifier un post
-        public function update_post() {
+        public function update_post($id, $data) {
 
             // On crée la requête
             $query = "
@@ -134,11 +138,11 @@ class Post {
             $stmt = $this->conn->prepare($query);
     
             // on nettoie et sécurise les inputs
-            $this->title = htmlspecialchars(strip_tags($this->title));
-            $this->body = htmlspecialchars(strip_tags($this->body));
-            $this->author = htmlspecialchars(strip_tags($this->author));
-            $this->category_name = htmlspecialchars(strip_tags($this->category_name));
-            $this->id = htmlspecialchars(strip_tags($this->id));
+            $this->title = htmlspecialchars(strip_tags($data['title']));
+            $this->body = htmlspecialchars(strip_tags($data['body']));
+            $this->author = htmlspecialchars(strip_tags($data['author']));
+            $this->category_name = htmlspecialchars(strip_tags($data['category_name']));
+            $this->id = htmlspecialchars(strip_tags($id));
     
             // tableau associatif pour lier les paramètres reçus à la requête
             $params = [
@@ -163,7 +167,7 @@ class Post {
     
 
     // Effacer un post
-    public function delete_post() {
+    public function delete_post($id) {
 
         // On crée la requête
         $query = "
@@ -176,7 +180,7 @@ class Post {
         $stmt = $this->conn->prepare($query);
 
         // on nettoie et sécurise l'input
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->id = htmlspecialchars(strip_tags($id));
 
         // tableau associatif pour lier les paramètres reçus à la requête
         $params = ["id" => $this->id];

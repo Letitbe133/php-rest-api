@@ -23,17 +23,26 @@ $conn = $db->connect();
 // On crée une nouvelle instance de l'objet (ou classe) Post
 $post = new Post($conn);
 
-$post->id = $_POST['id'];
+if(!isset($_GET['id'])) {
+    echo json_encode([
+        "success" => false,
+        "message" => "No post id provided"
+    ]);
+    die();
+}
 
-if($post->delete_post()) {
+$id = $_GET['id'];
+
+if($post->delete_post($id)) {
+
     echo json_encode([
         "success" => true,
-        "message" => "Post $post->id deleted"
+        "message" => "Post $id deleted"
         ]);
 } else {
     echo json_encode([
         "success" => false,
-        "message" => "Post $post->id could not be deleted"
+        "message" => "Post $id could not be deleted"
         ]);
 }
 
